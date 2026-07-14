@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sai Kumar Murimuri — SOC Analyst L2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A0E12;
+    --panel:#10161D;
+    --panel-2:#141B23;
+    --line:#1F2A34;
+    --text:#E6EDF3;
+    --muted:#8B98A5;
+    --crit:#FF5C5C;
+    --high:#FFA940;
+    --med:#F2D66C;
+    --ok:#34D399;
+    --info:#4EA1F7;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Space Grotesk', sans-serif;
+    line-height:1.55;
+  }
+  ::selection{background:var(--info); color:#0A0E12;}
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  a{color:inherit;}
+  .wrap{max-width:1040px; margin:0 auto; padding:0 24px;}
+
+  /* topbar */
+  .topbar{
+    position:sticky; top:0; z-index:50;
+    background:rgba(10,14,18,0.9);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar-inner{display:flex; align-items:center; justify-content:space-between; height:60px;}
+  .logo{font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:14px; letter-spacing:0.5px;}
+  .logo .dot{color:var(--ok);}
+  .navlinks{display:flex; gap:28px; font-size:13px; font-family:'IBM Plex Mono',monospace;}
+  .navlinks a{color:var(--muted); text-decoration:none; transition:color .15s;}
+  .navlinks a:hover{color:var(--text);}
+  @media (max-width:640px){ .navlinks{display:none;} }
+
+  /* hero / incident banner */
+  .hero{padding:64px 0 40px; border-bottom:1px solid var(--line);}
+  .ticket-id{
+    display:inline-flex; align-items:center; gap:10px;
+    font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--muted);
+    border:1px solid var(--line); padding:6px 12px; border-radius:4px;
+    margin-bottom:24px;
+  }
+  .status-pill{
+    display:inline-flex; align-items:center; gap:6px;
+    font-size:11px; font-weight:600; letter-spacing:0.6px;
+    padding:2px 8px; border-radius:3px; text-transform:uppercase;
+  }
+  .status-pill.active{background:rgba(52,211,153,0.12); color:var(--ok); border:1px solid rgba(52,211,153,0.3);}
+  .status-pill::before{content:''; width:6px; height:6px; border-radius:50%; background:currentColor;}
+
+  .hero h1{
+    font-size:clamp(32px, 5vw, 52px);
+    font-weight:700;
+    line-height:1.1;
+    letter-spacing:-0.5px;
+    margin-bottom:14px;
+  }
+  .hero h1 span{color:var(--muted); font-weight:500;}
+  .hero .role{
+    font-family:'IBM Plex Mono',monospace;
+    color:var(--high);
+    font-size:15px;
+    margin-bottom:18px;
+  }
+  .hero p.desc{color:var(--muted); max-width:560px; font-size:15px; margin-bottom:28px;}
+  .cta-row{display:flex; gap:12px; flex-wrap:wrap;}
+  .btn{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13px; font-weight:600;
+    padding:11px 20px; border-radius:4px;
+    text-decoration:none; display:inline-flex; align-items:center; gap:8px;
+    transition:transform .12s, background .12s;
+  }
+  .btn-primary{background:var(--ok); color:#08110C;}
+  .btn-primary:hover{transform:translateY(-1px);}
+  .btn-ghost{border:1px solid var(--line); color:var(--text);}
+  .btn-ghost:hover{border-color:var(--muted);}
+
+  /* metrics strip */
+  .metrics{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
+    background:var(--line); border:1px solid var(--line); border-radius:6px; overflow:hidden;
+    margin-top:36px;
+  }
+  .metric{background:var(--panel); padding:18px 16px;}
+  .metric .num{font-family:'IBM Plex Mono',monospace; font-size:26px; font-weight:600; color:var(--ok);}
+  .metric .label{font-size:11px; color:var(--muted); margin-top:4px; letter-spacing:0.3px;}
+  @media (max-width:640px){ .metrics{grid-template-columns:repeat(2,1fr);} }
+
+  section{padding:56px 0;}
+  section:not(.hero){border-bottom:1px solid var(--line);}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--info);
+    text-transform:uppercase; letter-spacing:1px; margin-bottom:10px;
+  }
+  h2{font-size:28px; font-weight:700; margin-bottom:8px;}
+  .section-sub{color:var(--muted); font-size:14px; margin-bottom:32px; max-width:620px;}
+
+  /* skill matrix */
+  .skill-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:14px;}
+  .skill-card{
+    background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:16px;
+  }
+  .skill-card .cat{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:8px;}
+  .tags{display:flex; flex-wrap:wrap; gap:6px;}
+  .tag{
+    font-family:'IBM Plex Mono',monospace; font-size:11px;
+    padding:4px 8px; border-radius:3px; background:var(--panel-2); color:var(--text); border:1px solid var(--line);
+  }
+
+  /* incident/case cards */
+  .case-card{
+    background:var(--panel); border:1px solid var(--line); border-radius:8px;
+    padding:24px; margin-bottom:18px;
+  }
+  .case-head{display:flex; justify-content:space-between; align-items:flex-start; gap:16px; flex-wrap:wrap; margin-bottom:14px;}
+  .case-id{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--muted);}
+  .sev{
+    font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:600; text-transform:uppercase;
+    padding:3px 9px; border-radius:3px; letter-spacing:0.4px;
+  }
+  .sev-crit{background:rgba(255,92,92,0.12); color:var(--crit); border:1px solid rgba(255,92,92,0.3);}
+  .sev-high{background:rgba(255,169,64,0.12); color:var(--high); border:1px solid rgba(255,169,64,0.3);}
+  .sev-med{background:rgba(242,214,108,0.12); color:var(--med); border:1px solid rgba(242,214,108,0.3);}
+  .case-card h3{font-size:19px; margin-bottom:8px;}
+  .case-card p{color:var(--muted); font-size:14px; margin-bottom:16px;}
+  .stat-row{display:flex; gap:28px; flex-wrap:wrap; margin-bottom:16px;}
+  .stat{}
+  .stat .val{font-family:'IBM Plex Mono',monospace; font-size:22px; font-weight:600; color:var(--ok);}
+  .stat .lbl{font-size:11px; color:var(--muted); margin-top:2px;}
+  .case-footer{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;}
+  .repo-link{
+    font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--info); text-decoration:none;
+    display:inline-flex; align-items:center; gap:6px;
+  }
+  .repo-link:hover{text-decoration:underline;}
+  .tools-inline{display:flex; gap:6px; flex-wrap:wrap;}
+
+  /* mitre grid */
+  .mitre-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:10px;}
+  .mitre-cell{
+    background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:12px;
+    font-family:'IBM Plex Mono',monospace;
+  }
+  .mitre-cell .tid{font-size:11px; color:var(--info); margin-bottom:4px;}
+  .mitre-cell .tname{font-size:13px;}
+
+  footer{padding:48px 0 60px;}
+  .contact-row{display:flex; gap:22px; flex-wrap:wrap; font-family:'IBM Plex Mono',monospace; font-size:13px; margin-top:18px;}
+  .contact-row a{text-decoration:none; color:var(--muted); border-bottom:1px solid transparent; transition:.15s;}
+  .contact-row a:hover{color:var(--text); border-color:var(--text);}
+  .foot-note{color:var(--muted); font-size:12px; margin-top:32px; font-family:'IBM Plex Mono',monospace;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap topbar-inner">
+    <div class="logo">sai<span class="dot">@</span>soc<span class="dot">:</span>~$</div>
+    <div class="navlinks">
+      <a href="#work">Vuln Mgmt</a>
+      <a href="#playbooks">Playbooks</a>
+      <a href="#mitre">MITRE</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</div>
+
+<header class="hero wrap">
+  <div class="ticket-id">
+    INC-0001 <span class="status-pill active">open to work</span>
+  </div>
+  <h1>Sai Kumar Murimuri <span>/ SOC Analyst L2</span></h1>
+  <div class="role">// vulnerability management · detection engineering · threat hunting</div>
+  <p class="desc">I triage, remediate, and hunt — turning raw alerts and CVE noise into measurable risk reduction. This is a working record of that process: real methodology, real metrics, no filler.</p>
+  <div class="cta-row">
+    <a class="btn btn-primary" href="#work">View case studies →</a>
+    <a class="btn btn-ghost" href="#contact">Get in touch</a>
+  </div>
+
+  <div class="metrics">
+    <div class="metric"><div class="num">~95%</div><div class="label">Open file-share backlog reduced (6 mo)</div></div>
+    <div class="metric"><div class="num">~89%</div><div class="label">CVE ticket volume reduced (12 mo)</div></div>
+    <div class="metric"><div class="num">L2</div><div class="label">SOC analyst, current role</div></div>
+    <div class="metric"><div class="num">1</div><div class="label">KB article authored & adopted</div></div>
+  </div>
+</header>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="eyebrow">Stack</div>
+    <h2>Tooling & coverage</h2>
+    <p class="section-sub">The platforms and frameworks this portfolio's work is built on.</p>
+    <div class="skill-grid">
+      <div class="skill-card">
+        <div class="cat">Vulnerability Mgmt</div>
+        <div class="tags"><span class="tag">Tenable.SC</span><span class="tag">Nessus</span><span class="tag">ServiceNow</span></div>
+      </div>
+      <div class="skill-card">
+        <div class="cat">Detection & SIEM</div>
+        <div class="tags"><span class="tag">SIEM triage</span><span class="tag">Log correlation</span><span class="tag">Alert tuning</span></div>
+      </div>
+      <div class="skill-card">
+        <div class="cat">Frameworks</div>
+        <div class="tags"><span class="tag">MITRE ATT&CK</span><span class="tag">NIST</span><span class="tag">CVSS</span></div>
+      </div>
+      <div class="skill-card">
+        <div class="cat">Process</div>
+        <div class="tags"><span class="tag">Playbooks</span><span class="tag">KB authoring</span><span class="tag">Rescan verification</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap">
+    <div class="eyebrow">Featured</div>
+    <h2>Vulnerability management</h2>
+    <p class="section-sub">Backlog reduction, tracked end-to-end from ticket creation to verified remediation.</p>
+
+    <div class="case-card">
+      <div class="case-head">
+        <div class="case-id">VM-2024-001 · Open File Share Remediation</div>
+        <span class="sev sev-crit">high impact</span>
+      </div>
+      <h3>Open File Share vulnerability backlog</h3>
+      <p>Owned remediation of a persistent open file-share exposure across the environment — tracked through ServiceNow, verified against Tenable.SC / Nessus rescans, and closed out with a knowledge-base article so the fix pattern didn't have to be re-solved by the next analyst.</p>
+      <div class="stat-row">
+        <div class="stat"><div class="val">~95%</div><div class="lbl">backlog reduced in 6 months</div></div>
+        <div class="stat"><div class="val">100%</div><div class="lbl">verified via rescan, not self-reported</div></div>
+      </div>
+      <div class="case-footer">
+        <div class="tools-inline">
+          <span class="tag">Tenable.SC</span><span class="tag">Nessus</span><span class="tag">ServiceNow</span>
+        </div>
+        <a class="repo-link" href="#">view repo →</a>
+      </div>
+    </div>
+
+    <div class="case-card">
+      <div class="case-head">
+        <div class="case-id">VM-2024-002 · CVE Ticket Reduction</div>
+        <span class="sev sev-high">ongoing program</span>
+      </div>
+      <h3>CVE-related ticket volume</h3>
+      <p>Drove a structured remediation cadence for CVE-linked tickets — prioritizing by exploitability and asset criticality rather than raw CVSS score, and closing the loop with rescan-verified evidence.</p>
+      <div class="stat-row">
+        <div class="stat"><div class="val">~89%</div><div class="lbl">ticket volume reduced over 12 months</div></div>
+      </div>
+      <div class="case-footer">
+        <div class="tools-inline"><span class="tag">CVSS triage</span><span class="tag">ServiceNow</span></div>
+        <a class="repo-link" href="#">view repo →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="playbooks">
+  <div class="wrap">
+    <div class="eyebrow">Documentation</div>
+    <h2>Playbooks & detections</h2>
+    <p class="section-sub">Repeatable response procedures and detection logic — add each real playbook here as its own repo entry.</p>
+
+    <div class="case-card">
+      <div class="case-head">
+        <div class="case-id">PB-001 · Open File Share KB</div>
+        <span class="sev sev-med">reference</span>
+      </div>
+      <h3>Open File Share remediation KB article</h3>
+      <p>Documented the standard remediation path for open file-share findings so triage and fix steps are consistent across the team.</p>
+      <div class="case-footer">
+        <div class="tools-inline"><span class="tag">KB</span><span class="tag">SOC process</span></div>
+        <a class="repo-link" href="#">view doc →</a>
+      </div>
+    </div>
+
+    <p class="foot-note">// slot in additional playbooks, detection rules, and threat hunt writeups here as separate case-card blocks</p>
+  </div>
+</section>
+
+<section id="mitre">
+  <div class="wrap">
+    <div class="eyebrow">Coverage map</div>
+    <h2>MITRE ATT&CK mapping</h2>
+    <p class="section-sub">Techniques this portfolio's detections and hunts map to. Replace with your real coverage as you publish it.</p>
+    <div class="mitre-grid">
+      <div class="mitre-cell"><div class="tid">T1078</div><div class="tname">Valid Accounts</div></div>
+      <div class="mitre-cell"><div class="tid">T1021</div><div class="tname">Remote Services</div></div>
+      <div class="mitre-cell"><div class="tid">T1190</div><div class="tname">Exploit Public-Facing App</div></div>
+      <div class="mitre-cell"><div class="tid">T1566</div><div class="tname">Phishing</div></div>
+      <div class="mitre-cell"><div class="tid">T1210</div><div class="tname">Exploitation of Remote Services</div></div>
+      <div class="mitre-cell"><div class="tid">T1082</div><div class="tname">System Info Discovery</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="eyebrow">Background</div>
+    <h2>About</h2>
+    <p class="section-sub" style="max-width:680px;">
+      SOC L2 analyst focused on vulnerability management, detection tuning, and threat hunting. Comfortable owning a finding from initial ticket through verified remediation — not just flagging it and moving on. Currently building out this portfolio while exploring the next role.
+    </p>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="eyebrow">Contact</div>
+    <h2>Let's talk</h2>
+    <p class="section-sub">Open to SOC / security operations roles.</p>
+    <div class="contact-row">
+      <a href="mailto:saikumarmm97@gmail.com">saikumarmm97@gmail.com</a>
+      <a href="tel:+919885510488">+91 98855 10488</a>
+      <a href="https://www.linkedin.com/in/sai-m-1b566632a" target="_blank">linkedin.com/in/sai-m</a>
+      <a href="https://github.com/saikumarmurimuri" target="_blank">github.com/saikumarmurimuri</a>
+    </div>
+    <div class="foot-note">© Sai Kumar Murimuri — built as a static GitHub Pages site.</div>
+  </div>
+</footer>
+
+</body>
+</html>
