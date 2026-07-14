@@ -94,7 +94,7 @@
 
   /* metrics strip */
   .metrics{
-    display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
+    display:grid; grid-template-columns:repeat(3,1fr); gap:1px;
     background:var(--line); border:1px solid var(--line); border-radius:6px; overflow:hidden;
     margin-top:36px;
   }
@@ -174,6 +174,7 @@
   <div class="wrap topbar-inner">
     <div class="logo">sai<span class="dot">@</span>soc<span class="dot">:</span>~$</div>
     <div class="navlinks">
+      <a href="#ir">Incident Response</a>
       <a href="#work">Vuln Mgmt</a>
       <a href="#playbooks">Playbooks</a>
       <a href="#mitre">MITRE</a>
@@ -196,10 +197,12 @@
   </div>
 
   <div class="metrics">
-    <div class="metric"><div class="num">~95%</div><div class="label">Open file-share backlog reduced (6 mo)</div></div>
-    <div class="metric"><div class="num">~89%</div><div class="label">CVE ticket volume reduced (12 mo)</div></div>
-    <div class="metric"><div class="num">L2</div><div class="label">SOC analyst, current role</div></div>
-    <div class="metric"><div class="num">1</div><div class="label">KB article authored & adopted</div></div>
+    <div class="metric"><div class="num">400+</div><div class="label">High-severity incidents investigated & contained</div></div>
+    <div class="metric"><div class="num">+25%</div><div class="label">Detection accuracy improvement</div></div>
+    <div class="metric"><div class="num">+30%</div><div class="label">MTTD/MTTR improvement via SIEM tuning</div></div>
+    <div class="metric"><div class="num">~95%</div><div class="label">Open file-share vuln backlog reduced</div></div>
+    <div class="metric"><div class="num">~89%</div><div class="label">CVE ticket volume reduced</div></div>
+    <div class="metric"><div class="num">4.6+ yrs</div><div class="label">SOC experience, L2</div></div>
   </div>
 </header>
 
@@ -210,20 +213,77 @@
     <p class="section-sub">The platforms and frameworks this portfolio's work is built on.</p>
     <div class="skill-grid">
       <div class="skill-card">
+        <div class="cat">SIEM / SOAR</div>
+        <div class="tags"><span class="tag">Splunk</span><span class="tag">Microsoft Sentinel</span><span class="tag">Devo SIEM/SOAR</span><span class="tag">FireEye Helix</span></div>
+      </div>
+      <div class="skill-card">
+        <div class="cat">EDR / XDR</div>
+        <div class="tags"><span class="tag">Trend Micro XDR</span><span class="tag">MS Defender for Endpoint</span><span class="tag">Trellix</span></div>
+      </div>
+      <div class="skill-card">
+        <div class="cat">Email Security</div>
+        <div class="tags"><span class="tag">Proofpoint</span><span class="tag">Mimecast</span><span class="tag">TMES</span></div>
+      </div>
+      <div class="skill-card">
+        <div class="cat">Cloud / Identity</div>
+        <div class="tags"><span class="tag">Microsoft 365</span><span class="tag">Azure</span><span class="tag">Entra ID</span></div>
+      </div>
+      <div class="skill-card">
         <div class="cat">Vulnerability Mgmt</div>
-        <div class="tags"><span class="tag">Tenable.SC</span><span class="tag">Nessus</span><span class="tag">ServiceNow</span></div>
+        <div class="tags"><span class="tag">Tenable.SC</span><span class="tag">Nessus</span><span class="tag">CVE Prioritization</span></div>
       </div>
       <div class="skill-card">
-        <div class="cat">Detection & SIEM</div>
-        <div class="tags"><span class="tag">SIEM triage</span><span class="tag">Log correlation</span><span class="tag">Alert tuning</span></div>
+        <div class="cat">Threat Detection</div>
+        <div class="tags"><span class="tag">MITRE ATT&CK</span><span class="tag">Cyber Kill Chain</span><span class="tag">IOC Analysis</span></div>
       </div>
       <div class="skill-card">
-        <div class="cat">Frameworks</div>
-        <div class="tags"><span class="tag">MITRE ATT&CK</span><span class="tag">NIST</span><span class="tag">CVSS</span></div>
+        <div class="cat">Threat Intelligence</div>
+        <div class="tags"><span class="tag">VirusTotal</span><span class="tag">MISP</span><span class="tag">AbuseIPDB</span><span class="tag">Recorded Future</span></div>
       </div>
       <div class="skill-card">
-        <div class="cat">Process</div>
-        <div class="tags"><span class="tag">Playbooks</span><span class="tag">KB authoring</span><span class="tag">Rescan verification</span></div>
+        <div class="cat">Query & Ticketing</div>
+        <div class="tags"><span class="tag">SPL</span><span class="tag">KQL</span><span class="tag">ServiceNow</span><span class="tag">Jira</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="ir">
+  <div class="wrap">
+    <div class="eyebrow">Featured</div>
+    <h2>Incident response & detection tuning</h2>
+    <p class="section-sub">Day-to-day SOC L2 work: triage, containment, and making the detection layer smarter over time.</p>
+
+    <div class="case-card">
+      <div class="case-head">
+        <div class="case-id">IR-2026-001 · High-Severity Incident Response</div>
+        <span class="sev sev-crit">core function</span>
+      </div>
+      <h3>Investigating & containing high-severity incidents</h3>
+      <p>End-to-end L2 ownership of security alerts across endpoint, network, email, identity, and cloud — from initial triage through containment and closure, covering phishing, account compromise, malware, and unauthorized access scenarios.</p>
+      <div class="stat-row">
+        <div class="stat"><div class="val">400+</div><div class="lbl">high-severity incidents investigated & contained</div></div>
+        <div class="stat"><div class="val">+25%</div><div class="lbl">improvement in detection accuracy</div></div>
+      </div>
+      <div class="case-footer">
+        <div class="tools-inline"><span class="tag">XDR</span><span class="tag">SIEM</span><span class="tag">SOAR</span></div>
+        <a class="repo-link" href="#">view repo →</a>
+      </div>
+    </div>
+
+    <div class="case-card">
+      <div class="case-head">
+        <div class="case-id">IR-2026-002 · Detection Engineering</div>
+        <span class="sev sev-high">ongoing</span>
+      </div>
+      <h3>SIEM tuning & correlation rule optimization</h3>
+      <p>Reduced noise and improved signal quality by refining detection logic and correlation rules — fewer false positives reaching the queue, faster time to detect and respond.</p>
+      <div class="stat-row">
+        <div class="stat"><div class="val">+30%</div><div class="lbl">MTTD/MTTR improvement</div></div>
+      </div>
+      <div class="case-footer">
+        <div class="tools-inline"><span class="tag">SPL</span><span class="tag">KQL</span><span class="tag">Correlation rules</span></div>
+        <a class="repo-link" href="#">view repo →</a>
       </div>
     </div>
   </div>
@@ -316,7 +376,7 @@
     <div class="eyebrow">Background</div>
     <h2>About</h2>
     <p class="section-sub" style="max-width:680px;">
-      SOC L2 analyst focused on vulnerability management, detection tuning, and threat hunting. Comfortable owning a finding from initial ticket through verified remediation — not just flagging it and moving on. Currently building out this portfolio while exploring the next role.
+      SOC L2 analyst with 4.6+ years across enterprise Security Operations Centers, specializing in incident response, threat detection, threat hunting, malware analysis, cloud security monitoring, and detection engineering. Comfortable owning a finding from initial ticket through verified remediation — not just flagging it and moving on. Currently exploring the next role, and open to freelance security consulting.
     </p>
   </div>
 </section>
